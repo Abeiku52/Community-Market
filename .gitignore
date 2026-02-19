@@ -29,6 +29,7 @@ coverage/
 *.swp
 *.swo
 *~
+.kiro/
 
 # OS
 .DS_Store
@@ -37,3 +38,8 @@ Thumbs.db
 # Temporary files
 tmp/
 temp/
+
+# Uploads
+uploads/
+public/uploads/
+frontend/public/uploads/
