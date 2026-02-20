@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build:all": "npm run build && npm run build:frontend",
     "start": "node dist/index.js",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build:all",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"

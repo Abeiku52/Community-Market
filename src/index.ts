@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { config } from './config/env';
 import pool from './config/database';
 import scheduledJobs from './jobs/scheduledJobs';
@@ -10,6 +12,9 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { apiLimiter } from './middleware/rateLimit';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -36,7 +41,7 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Global rate limiting
+// Global rate limiting for API routes only
 app.use('/api/', apiLimiter);
 
 // Health check endpoint
@@ -97,8 +102,19 @@ app.use('/api', (req, res) => {
   res.json({ message: 'Teacher Marketplace API' });
 });
 
-// 404 handler
-app.use(notFoundHandler);
+// Serve static files from frontend build (in production)
+if (config.nodeEnv === 'production') {
+  const frontendPath = path.join(__dirname, '../frontend/dist');
+  app.use(express.static(frontendPath));
+  
+  // Handle React routing - return index.html for all non-API routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+} else {
+  // 404 handler for development
+  app.use(notFoundHandler);
+}
 
 // Error handling middleware (must be last)
 app.use(errorHandler);
