@@ -4,24 +4,24 @@ dotenv.config();
 
 // Validate required environment variables
 function validateEnv() {
-  const required = [
-    'DB_HOST',
-    'DB_NAME',
-    'DB_USER',
-    'DB_PASSWORD',
-    'JWT_SECRET',
-  ];
-
-  const missing = required.filter(key => !process.env[key]);
-
-  if (missing.length > 0 && process.env.NODE_ENV === 'production') {
-    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
-  }
-
-  // Warn about default values in production
+  // In production, either DATABASE_URL or individual DB vars must be set
   if (process.env.NODE_ENV === 'production') {
-    if (process.env.JWT_SECRET === 'change_this_secret_in_production') {
-      throw new Error('JWT_SECRET must be changed in production');
+    if (!process.env.DATABASE_URL) {
+      const required = [
+        'DB_HOST',
+        'DB_NAME',
+        'DB_USER',
+        'DB_PASSWORD',
+      ];
+      const missing = required.filter(key => !process.env[key]);
+      if (missing.length > 0) {
+        throw new Error(`Missing required environment variables: ${missing.join(', ')} or DATABASE_URL`);
+      }
+    }
+
+    // JWT_SECRET is always required in production
+    if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'change_this_secret_in_production') {
+      throw new Error('JWT_SECRET must be set in production');
     }
   }
 }
