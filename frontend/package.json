@@ -12,8 +12,8 @@
     "preview": "vite preview"
   },
   "engines": {
-    "node": "18.x",
-    "npm": "9.x"
+    "node": "20.x",
+    "npm": "10.x"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.20.0",
