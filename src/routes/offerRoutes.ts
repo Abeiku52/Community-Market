@@ -1,6 +1,6 @@
 import express, { Response } from 'express';
 import OfferModel from '../models/Offer';
-import ListingModel from '../models/Listing';
+import listingService from '../services/listingService';
 import { authenticate, AuthRequest } from '../middleware/auth';
 import { NotFoundError, ForbiddenError, ValidationError } from '../utils/errors';
 
@@ -21,7 +21,7 @@ router.post('/', authenticate, async (req: AuthRequest, res: Response, next) => 
     }
 
     // Get listing details
-    const listing = await ListingModel.findById(listingId);
+    const listing = await listingService.findById(listingId);
     if (!listing) {
       throw new NotFoundError('Listing not found');
     }
@@ -55,7 +55,7 @@ router.get('/listing/:listingId', authenticate, async (req: AuthRequest, res: Re
     const userId = req.user!.id;
 
     // Verify user is the seller
-    const listing = await ListingModel.findById(listingId);
+    const listing = await listingService.findById(listingId);
     if (!listing) {
       throw new NotFoundError('Listing not found');
     }
