@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { favoritesAPI } from '../services/api';
-import type { Listing } from '../types';
+import type { Listing, ListingWithDetails } from '../types';
 
 interface ListingCardProps {
-  listing: Listing;
+  listing: Listing | ListingWithDetails;
   isFavorited?: boolean;
   onFavoriteChange?: () => void;
 }
@@ -31,7 +31,13 @@ export default function ListingCard({ listing, isFavorited: initialFavorited = f
   const [isFavorited, setIsFavorited] = useState(initialFavorited);
   const [isTogglingFavorite, setIsTogglingFavorite] = useState(false);
   const photoUrl = listing.photos[0]?.photoUrl || 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=400';
-  const isUrgent = listing.isUrgent && listing.status === 'active' && listing.daysUntilDeparture;
+  
+  // Type guard to check if listing has isUrgent property
+  const isListingWithDetails = (l: Listing | ListingWithDetails): l is ListingWithDetails => {
+    return 'isUrgent' in l;
+  };
+  
+  const isUrgent = isListingWithDetails(listing) && listing.isUrgent && listing.status === 'active' && listing.daysUntilDeparture;
 
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.preventDefault();

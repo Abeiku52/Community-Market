@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { listingsAPI, messagesAPI, transactionsAPI, favoritesAPI } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
