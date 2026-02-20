@@ -1,7 +1,6 @@
 {
   "name": "teacher-marketplace",
   "version": "1.0.0",
-  "type": "module",
   "description": "A marketplace platform for teachers in international schools to sell belongings before departure",
   "main": "dist/index.js",
   "scripts": {
