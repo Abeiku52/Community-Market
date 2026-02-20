@@ -80,7 +80,6 @@ export default function ProfilePage() {
   }
 
   const activeListings = listings.filter(l => l.status === 'active');
-  const soldListings = listings.filter(l => l.status === 'sold');
 
   return (
     <div className="max-w-7xl mx-auto animate-fade-in space-y-6">

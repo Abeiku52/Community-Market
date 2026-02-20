@@ -7,7 +7,6 @@ import { useAuth } from '../contexts/AuthContext';
 export default function ListingDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [message, setMessage] = useState('');
   const [showMessageForm, setShowMessageForm] = useState(false);

@@ -40,7 +40,7 @@ export default function BiddingPanel({
   const isSeller = user?.id === sellerId;
 
   // Get bids for this listing
-  const { data: bids = [], isLoading } = useQuery({
+  const { data: bids = [] } = useQuery({
     queryKey: ['bids', listingId],
     queryFn: async () => {
       const response = await api.get(`/bids/listings/${listingId}`);

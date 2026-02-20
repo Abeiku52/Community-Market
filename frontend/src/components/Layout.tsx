@@ -23,7 +23,7 @@ export default function Layout() {
     refetchInterval: 30000,
   });
 
-  const { data: unreadNotifications = 0 } = useQuery({
+  useQuery({
     queryKey: ['unreadNotifications'],
     queryFn: () => notificationsAPI.getUnreadCount(),
     enabled: !!user,

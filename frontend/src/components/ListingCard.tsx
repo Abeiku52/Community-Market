@@ -31,7 +31,7 @@ export default function ListingCard({ listing, isFavorited: initialFavorited = f
   const [isFavorited, setIsFavorited] = useState(initialFavorited);
   const [isTogglingFavorite, setIsTogglingFavorite] = useState(false);
   const photoUrl = listing.photos[0]?.photoUrl || 'https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=400';
-  const isUrgent = listing.isUrgent && listing.status === 'active';
+  const isUrgent = listing.isUrgent && listing.status === 'active' && listing.daysUntilDeparture;
 
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.preventDefault();

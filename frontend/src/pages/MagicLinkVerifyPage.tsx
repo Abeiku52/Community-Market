@@ -6,7 +6,6 @@ import { useAuth } from '../contexts/AuthContext';
 export default function MagicLinkVerifyPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying');
   const [error, setError] = useState('');
 

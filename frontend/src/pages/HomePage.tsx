@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { listingsAPI } from '../services/api';
 import ListingCard from '../components/ListingCard';
 import { Link } from 'react-router-dom';
-import type { Listing } from '../types';
 
 type SortOption = 'newest' | 'oldest' | 'price-low' | 'price-high' | 'popular';
 
